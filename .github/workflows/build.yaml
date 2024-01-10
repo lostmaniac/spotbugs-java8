@@ -31,13 +31,12 @@ jobs:
     #       ref: master
     - name: Checkout GitLab Repository
       run: |
-        rm -rf README.md .git
-        git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git .
-        # rm -rf README.md
-        # cd spotbugs
-        # git checkout master
-        # ls -lh
-        # mv * ./..
+        git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
+        rm -rf README.md
+        cd spotbugs
+        git checkout master
+        ls -lh
+        sh -c 'mv * ..'
 
     - name: 修改文件
       run: |
