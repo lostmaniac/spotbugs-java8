@@ -33,7 +33,8 @@ jobs:
       run: |
         git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
         rm -rf README.md .git
-        mv ./spotbugs/* .
+        pwd
+        mv ./* ..
 
     - name: 修改文件
       run: |
