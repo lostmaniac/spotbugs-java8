@@ -1,0 +1,44 @@
+name: 支持java8镜像
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: 设置QEMU
+      uses: docker/setup-qemu-action@v3
+
+    - name: 设置Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+    - name: 登录到GitHub容器仓库 
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: 克隆仓库到本地
+      uses: actions/checkout@v4
+      with:
+          repository: https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
+          fetch-depth: master
+
+    - name: 修改文件
+      run: |
+        sed -i 's/java adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/java adoptopenjdk-8.0.302+8 adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/g' config/.tool-versions
+
+    - name: 构建并推送镜像
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        platforms: linux/amd64
+        file: ./Dockerfile
+        push: true
+        tags: ghcr.io/${{ github.repository_owner }}/spotbugs:3-java8
