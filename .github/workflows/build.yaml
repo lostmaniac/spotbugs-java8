@@ -32,8 +32,10 @@ jobs:
     - name: Checkout GitLab Repository
       run: |
         git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
+        ls -lh
         cd spotbugs
         git checkout master
+        ls -lh
         mv * ..
 
     - name: 修改文件
