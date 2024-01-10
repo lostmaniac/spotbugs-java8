@@ -28,7 +28,7 @@ jobs:
       uses: actions/checkout@v4
       with:
           repository: https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
-          fetch-depth: master
+          ref: master
 
     - name: 修改文件
       run: |
