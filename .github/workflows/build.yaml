@@ -38,7 +38,7 @@ jobs:
         sed -i 's/java adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/java adoptopenjdk-8.0.302+8 adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/g' spotbugs/config/.tool-versions
 
     - name: 构建并推送镜像
-      uses: docker/build-push-action@v4
+      uses: docker/build-push-action@v5
       with:
         context: spotbugs
         platforms: linux/amd64
