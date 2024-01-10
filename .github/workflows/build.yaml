@@ -32,20 +32,16 @@ jobs:
     - name: Checkout GitLab Repository
       run: |
         git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
-        rm -rf README.md .git
-        pwd
-        ls -lh
-        mv ./* ..
 
     - name: 修改文件
       run: |
-        sed -i 's/java adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/java adoptopenjdk-8.0.302+8 adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/g' config/.tool-versions
+        sed -i 's/java adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/java adoptopenjdk-8.0.302+8 adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/g' spotbugs/config/.tool-versions
 
     - name: 构建并推送镜像
       uses: docker/build-push-action@v4
       with:
-        context: .
+        context: spotbugs
         platforms: linux/amd64
-        file: ./Dockerfile
+        file: Dockerfile
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/spotbugs:3-java8
