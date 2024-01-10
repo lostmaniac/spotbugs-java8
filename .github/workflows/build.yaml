@@ -24,12 +24,14 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: 克隆仓库到本地
-      uses: actions/checkout@v4
-      with:
-          repository: https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
-          ref: master
-
+    # - name: 克隆仓库到本地
+    #   uses: actions/checkout@v4
+    #   with:
+    #       repository: https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git
+    #       ref: master
+    - name: Checkout GitLab Repository
+      run: git clone https://gitlab.com/gitlab-org/security-products/analyzers/spotbugs.git .
+      
     - name: 修改文件
       run: |
         sed -i 's/java adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/java adoptopenjdk-8.0.302+8 adoptopenjdk-17.0.4+8 adoptopenjdk-11.0.16+8/g' config/.tool-versions
